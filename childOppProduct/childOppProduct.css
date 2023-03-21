@@ -1,0 +1,6 @@
+.centeree {
+    height: 300px;
+    overflow: hidden; /* Hide scrollbars */
+    /*align-self: center;*/
+    margin-right: 10px;
+  }

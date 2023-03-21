@@ -1,0 +1,9 @@
+<template>
+    <template if:true={accounts}>
+        <template for:each={accounts} for:item="account">
+           <template for:each={account.Contacts} for:item="co">
+               <p key={account.Id}>Account - {account.Name} | Contact - {co.Name}</p>
+           </template>
+        </template>
+   </template>
+</template>

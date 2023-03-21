@@ -1,0 +1,79 @@
+<template>      
+    <div class="slds-theme_default">
+        <template if:true={openmodels}>
+            <div class="demo-only" style="height: 1540px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-scrollable" style="height:30rem"> 
+                        <div class="slds-modal__container">
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeModals} title="Close">
+                                    <lightning-icon alternative-text="close" icon-name="utility:close" size="small" variant="inverse"></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Choose price book</h2>
+                            </header>
+                            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1"> 
+                                <div class="centeree">
+                                    <h2><p style="text-align:left;">Select a Price Book to associate with this opportunity. You can add products only from the Price Book you associate with this opportunity. Changing the Price Book deletes all products from the opportunity.</p></h2>
+                                    <div class="slds-grid slds-wrap">
+                                        <div class="slds-size--2-of-4 slds-p-around--large">  
+                                            <p style="text-align:left;">
+                                                <lightning-combobox class="" name="Price book"
+                                                    label="Price book"
+                                                    placeholder="-Select Pricebook-"
+                                                    value={value}
+                                                    options={pricebookOptions}
+                                                    onchange={pricebookChange} style="margin-top: 5px;">
+                                                </lightning-combobox>
+                                                <template if:true={sameval}>
+                                                   
+                                                    <h6>You Selected Previous Price book </h6>
+                                                </template>
+                                                
+                                            </p>
+                                        </div>
+                                    </div></div>
+                               
+                            </div>
+                            <footer class="slds-modal__footer">
+                                <lightning-button label="Cancel" variant="neutral" onclick={closeModals}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <lightning-button label="save" variant="brand" onclick={savemodal} disabled={disablevar} ></lightning-button>
+                            </footer>    
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+    </div>
+
+    <!--confirm page-->
+    <template if:true={dels}>
+        <template if:true={delclosemodel}>
+            <div class="demo-only" style="height: 1540px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open" >
+                    <div class="slds-scrollable" style="height:30rem"> <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={delclosemodal} title="Close">
+                                <lightning-icon alternative-text="close" icon-name="utility:close" size="small" variant="inverse"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Confirm Price Book Change</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2"> 
+                            
+                            <h2><p style="text-align:left;">You have changed the price book for this opportunity. This action permanently deletes all products from the opportunity. Continue?</p></h2>
+                          
+                        </div>
+                        <footer class="slds-modal__footer">
+                            <lightning-button label="Cancel" variant="neutral" onclick={delclosemodal}></lightning-button>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <lightning-button label="save" variant="brand" onclick={confirmModal} ></lightning-button>
+                        </footer>    
+                    </div></div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </template>
+    </template>
+
+</template>

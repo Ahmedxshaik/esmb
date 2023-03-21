@@ -1,0 +1,206 @@
+<template>
+  <lightning-card>
+      <header class="slds-modal__header">Convert Lead</header>
+    <template if:true={continueExecution}>
+         <ul class="slds-list_horizontal slds-has-inline-block-links_space">
+            <lightning-icon  class="slds-p-top_x-small slds-p-left_medium" icon-name="utility:warning" alternative-text="Warning!" variant="Error"></lightning-icon>
+               <div class="slds-p-left_x-small slds-p-top_x-small slds-text-color_error">Specified Contact Must be Parented To Specified Account</div>
+          </ul>
+    </template>
+             <div class="slds-var-m-around_medium"> 
+                <lightning-accordion allow-multiple-sections-open
+                    onsectiontoggle={handleSectionToggle}
+                    active-section-name={activeSections}>
+                       <div class="slds-box slds-theme_shade">        
+                              <lightning-accordion-section name="A" label="Account">
+                                  <fieldset class="slds-form-element slds-form-element_compound">
+                                       <div class="slds-form-element__control">
+                                           <div class="slds-form-element__row">
+                                                <div class="slds-size_1-of-2">
+                                                     <div class="slds-form-element">
+                                                          <input type="radio" class="accountRadioCreationClass" name="accountRadio" id="radioone" value="nameA" onclick={handleOnclickAccountCreation} checked={checkvalForAccount}>
+                                                              <label  class="slds-p-left_x-small" for="nameA">Create New</label>
+                                                                  <div class="c-container">
+                                                                      <lightning-record-edit-form object-api-name="Account">
+                                                                           <lightning-input label="Account Name" type="text" id="accountCreationId" class="slds-p-bottom_x-small validValue acctname" onchange={onAccountCreation}   value={companyname} required></lightning-input>
+                                                                                       </lightning-record-edit-form>
+                                                                     </div>        
+                                                                   <div class="slds-form-element__control"> </div>
+                                                         </div>
+                                                    </div>
+                                                     <div class="slds-text-align_center">
+                                                         - OR - 
+                                                           <div class = "verticalline"></div> 
+                                                       </div>
+                                                     
+                                                         <div class="slds-p-left_medium slds-size_1-of-3">
+                                                               <div class="slds-form-element">
+                                                                  <input type="radio" class="accountRadioSelectionClass" name="accountRadio" id="radioTwo" onclick={handleClickAccountSelection} value="nameB" >
+                                                                       <label class="slds-p-left_x-small" for="name">Choose Existing</label>
+                                                                           <div class="slds-p-vertical_x-small">
+                                                                                 <label class="slds-form-element__label" for="text-input-id-1">Search Account</label>
+                                                                                     <c-lead-conversion-custom-lookup  disable-search-response-from-parent={classnameForAccount} id="uuu" object-api-name="account" icon-name="standard:account"  
+                                                                                     placeholdertext="Search for matching accounts"  onrecordselection={onAccountSelection}></c-lead-conversion-custom-lookup>  
+                                                                              </div>
+                                                                    </div>
+                                                            </div>
+                                                    
+                                                      
+                                                </div>
+                                              </div>
+                                   </fieldset>
+                               </lightning-accordion-section>             
+                          </div>
+                          <div class="slds-p-top_x-small"></div>
+
+                         <div class="slds-box slds-theme_shade"> 
+                               <lightning-accordion-section name="B" label="Contact">
+                                      <fieldset class="slds-form-element slds-form-element_compound">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_1-of-2">
+                                                         <div class="slds-form-element">
+                                                               <input type="radio" class="contactRadioCreationClass"  name="contactRadio" id="radioThree" value="nameE" onclick={handleOnClickContactCreation} checked={checkvalForContact}>
+                                                                    <label class="slds-p-left_x-small" for="nameE">Create New</label>
+                                                                            <div class="c-container">
+                                                                              <lightning-card>
+                                                                                    <div class="slds-form">
+                                                                                        <div class="slds-form-element slds-form-element_stacked">
+                                                                                          <lightning-input type="text"  label="First Name" onchange={handleContactFirstName} value={firstname}></lightning-input>
+                                                                                          <lightning-input type="text" class="validValue inputLastName" label="Last Name" value={lastname} onchange={handleContactLastName} required></lightning-input>
+                                                                                          <lightning-input type="tel"  label="Phone" value={contactphone} onchange={handleContactPhoneNumber} ></lightning-input>
+                                                                                          <lightning-input type="email"  label="Email" value={contactemail} onchange={handleContactEmail} ></lightning-input>
+                                                                                        </div>
+                                                                                     </div>
+                                                                                 </lightning-card>
+                                                                              </div>
+                                                                  <div class="slds-form-element__control"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-text-align_center">
+                                                          - OR - 
+                                                           <div class = "verticallineOne"></div> 
+                                                         </div>
+                                                        <div class="slds-p-left_medium slds-size_1-of-3">
+                                                            <div class="slds-form-element">
+                                                                <input type="radio" class="contactRadioSelectionClass" name="contactRadio" id="radioFour" value="nameB"   onclick={handleClickContactSelection}>
+                                                                   <label class="slds-p-left_x-small" for="name">Choose Existing</label>
+                                                                       <c-lead-conversion-custom-lookup disable-search-response-from-parent={contackLookUpSelectionDisable}  object-api-name="contact" icon-name="standard:contact"  
+                                                                       placeholdertext={contactplaceholdertext} onrecordselection={onContactSelection}></c-lead-conversion-custom-lookup>  
+                                                               </div>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                          </fieldset>
+                                      </lightning-accordion-section>
+                                </div>
+                                <div class="slds-p-top_x-small"></div>
+
+                                <div class="slds-box slds-theme_shade"> 
+                                    <lightning-accordion-section name="C" label="Opportunity">
+                                        <fieldset class="slds-form-element slds-form-element_compound">
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-form-element__row">
+                                                    <div class="slds-size_1-of-2">
+                                                      <div class="slds-form-element">
+                                                         <input type="radio"  class="firstRadioOpportunitycls" name="opportunityRadio" id="radioFive" value="nameI" checked={checkvalForOpportunity} onclick={handleOnClickOpportunityCreation}>
+                                                             <label  class="slds-p-left_x-small" for="nameI">Create New</label>
+                                                                <div class="c-container">
+                                                                   <lightning-record-edit-form object-api-name="Opportunity__c">
+                                                                      <lightning-input label="Opportunity Name" type="text" class="slds-p-bottom_x-small validValue inputOpportunityName" value={opportunitynamefield} onchange={handleOpportunityName} disabled={checkvalOne} required></lightning-input>
+                                                                     </lightning-record-edit-form>
+                                                                  </div>
+                                                                  <div class="slds-form-element__control"></div>
+                                                          </div>
+                                                      </div>
+                                                      <div class="slds-text-align_center">
+                                                        - OR - 
+                                                          <div class = "verticallineOne"></div> 
+                                                        </div>
+                                                      <div class="slds-p-left_medium slds-size_3-of-7">
+                                                         <div class="slds-form-element">
+                                                             <input type="radio" class="secondRadioOpportunitycls" name="opportunityRadio" id="radioSix" value="nameB"  disabled={opportunityLooUpSelectionDisable} onclick={handleClickOpportunitySelection} checked={checkvalForOpportunitySelection}>
+                                                                 <label class="slds-p-left_x-small" for="name">Choose Existing</label>
+                                                                  <div class="slds-p-vertical_x-small">
+                                                                     <div class="slds-form-element">
+                                                                       <label class="slds-form-element__label" for="text-input-id-3"></label>
+                                                                          <div class="slds-form-element__control">
+                                                                             <template if:true={checkval}>
+                                                                                <lightning-input type="text" id="text-input-id-3" placeholder="To choose existing opportunity choose existing account" value={opportunitySelectionToBeDisplayed} class="oppUpdationRecordSelection"></lightning-input>
+                                                                                 <div class="slds-scrollable_y" style="height:20rem;width:24rem">
+                                                                                    <template if:true={showOpportunitiesSelected}>
+                                                                                       <article class="slds-card">
+                                                                                          <div class="slds-m-around_medium">
+                                                                                             <template if:true={accountsWithOpportunities}>
+                                                                                                <template for:each={accountsWithOpportunities} for:item="opp">
+                                                                                                    <div class="slds-p-top_small"  key={opp.Id}>
+                                                                                                     <p>{opp.opportunityCount} Opportunities Match</p>
+                                                                                                     </div>
+                                                                                                     <template for:each={opp.opportunityList} for:item="opprec">
+                                                                                                         <div class="slds-p-top_x-small slds-p-bottom_small" key={opprec.id}>
+                                                                                                           <div class="slds-box">
+                                                                                                              <input name="radiogroup"  class="opportunitySelectedValueFromList" type="radio" value={opprec.Id} onchange={handleSelectedOpportunityRelatedToAccount}/>
+                                                                                                              <label class="slds-p-left_x-small" for={opprec.Id}>{opprec.Name}</label>
+                                                                                                              <p>Account Name:{accountName}</p>
+                                                                                                              <p>Closed Date:{opprec.CloseDate__c}</p>
+                                                                                                              <p>Amount:{opprec.Amount__c}</p>
+                                                                                                               <p>Opportunity Owner:{opprec.Owner.Name}</p>
+                                                                                                             </div>
+                                                                                                           </div>
+                                                                                                       </template>
+                                                                                                 </template>
+                                                                                              </template>
+                                                                                              <template if:true={error}>
+                                                                                                  {error}
+                                                                                              </template>
+                                                                                           </div>
+                                                                                         </article>
+                                                                                      </template>
+                                                                                  </div>
+                                                                               </template>
+                                                                           </div>
+                                                                        </div>
+                                                                    </div>
+                                                              </div>
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                            <lightning-input id="DDl" type="checkbox" class="opportunityCreationCheckbox"
+                                              label="Don't create an opportunity upon conversion"
+                                               onchange={handleOpportunityCreation}></lightning-input>
+                                        </lightning-accordion-section>
+                                    </div>
+                  </lightning-accordion>
+                  <div class="slds-form-element">
+                     <lightning-input type="text" label="Record Owner" value={ownername} required></lightning-input>
+                   </div>
+                  <lightning-combobox
+                     label="Converted Status"
+                     value={value}
+                     options={statusoptions}
+                     onchange={handleChange} 
+                     required
+                   ></lightning-combobox>
+          </div>
+          <div class="slds-p-top_large">
+             <footer class="slds-modal__footer">
+                   <template if:true={mustFillFields}>
+                     <div class="slds-p-bottom_small slds-p-right_large">
+                       <section aria-live="polite" class="slds-popover slds-nubbin--bottom slds-theme--error" role="alert">
+                          <header class="slds-popover__header">
+                                <div class="slds-popover__body" id="dialog-body-id-394">
+                                   <p>Review the errors on this page</p>
+                                 </div>
+                             </header>
+                          </section>
+                        </div>
+                        <lightning-icon class="slds-p-right_x-small" slot="media"  size="small" icon-name="utility:warning" alternative-text="Warning!" variant="Error"></lightning-icon>     
+                    </template> 
+                    <lightning-button label="Convert" onclick={convertDetails}></lightning-button>
+                    <lightning-button  class="slds-p-left_x-small" label="Cancel" onclick={closeQuickAction}></lightning-button>
+                  </footer>
+              </div>
+              
+  </lightning-card>
+</template>
